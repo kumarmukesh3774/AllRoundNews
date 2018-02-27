@@ -23,6 +23,26 @@ border-radius: 20px;
 }
 
 body {
-    
+  font-family: 'Domine', serif;
+color:#826;  
 background-color: white;
 }
+img{
+	
+
+	width:150px;
+	height:150px;
+	
+}
+.row{
+	margin-top:20px;
+	
+	
+	
+}
+.col-sm-4{
+	
+	background-color: light blue;
+	
+}
+

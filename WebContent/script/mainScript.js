@@ -1,10 +1,11 @@
 /**
  * 
  */
+
 function receiver()
 {
 var xmlhttp=new XMLHttpRequest();
-var url ="https://newsapi.org/v2/everything?q=bitcoin&apiKey=0829585b678c492ea688ce9899e48313";
+var url ="https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=0829585b678c492ea688ce9899e48313";
 //opening connection to url
 xmlhttp.open("GET",url,true);
 xmlhttp.send();
@@ -16,7 +17,16 @@ var json=JSON.parse(this.responseText);
 var s="";
 for(i=0;i<json.articles.length;i++)
 	{
-	s="<p>"+s+json.articles[i].title+"</p>";
+	s=s+"<div class='col-lg-4 col-sm-6'>" +
+	
+	"<div><b>"+json.articles[i].title+"</b></div>"+
+	"<div class='row'>"+
+	"<div class='col-sm-6'>"+
+	"<a href="+json.articles[i].url+">"+
+	"<img src="+json.articles[i].urlToImage+" alt='No Image'></div>"+
+	"<div class='col-sm-6'>"+json.articles[i].description+"</div>"+
+	"</a>" +
+	"</div><input type='submit' value='Add to Favourites' onclick='addToFavourites("+json.articles[i].title+")' /></div>";
 	}
 
 
@@ -43,11 +53,39 @@ var sampleText2="<div class='res'>"+"Percent WordCount :"+myArr.results.perWordC
                   "Percent Adverbs : "+myArr.results.perAdv  + "<br>"+
                   "Percent missSpell: "+myArr.results.percentMissSpell+"</div>";
 //*/
-document.getElementById("msg").innerHTML=s;
-document.getElementById("msg1").innerHTML=s;
-document.getElementById("msg2").innerHTML=s;
+//document.getElementById("msg").innerHTML=s;
+document.getElementById("msg").insertAdjacentHTML('afterbegin',s);
+
+
 }
 
 };
 
 }
+function addToFavourites(articleElement){
+	console.log(articleElement);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
