@@ -1,7 +1,31 @@
 /**
  * 
  */
-
+function addToFavourites(input){
+	var title= input.getAttribute('title');
+	var url= input.getAttribute('url');
+	var urlToImage= input.getAttribute('urlToImage');
+	var description= input.getAttribute('description');
+	console.log(title+url+urlToImage+description);
+	
+	var xmlhttp=new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange = function(){
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+			//document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+		}
+	};
+	
+	var url1 ="http://localhost:8088/AllRoundNews/Handler?title="+title+"&url="+url+"&urlToImage="+urlToImage+"&description="+description;
+	xmlhttp.open('GET',url1,true);
+	xmlhttp.send();
+	
+	
+	
+	
+	
+	
+}
 function receiver()
 {
 var xmlhttp=new XMLHttpRequest();
@@ -26,34 +50,15 @@ for(i=0;i<json.articles.length;i++)
 	"<img src="+json.articles[i].urlToImage+" alt='No Image'></div>"+
 	"<div class='col-sm-6'>"+json.articles[i].description+"</div>"+
 	"</a>" +
-	"</div><input type='submit' value='Add to Favourites' onclick='addToFavourites("+json.articles[i].title+")' /></div>";
+	"</div>" +
+	
+	"<input type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" " +
+			"title=\""+json.articles[i].title+"\" " +
+			"url=\"" +json.articles[i].url+"\" " +
+			"urlToImage=\"" +json.articles[i].urlToImage+"\"" +
+			"description=\"" +json.articles[i].description+"\"></div>";
 	}
 
-
-
-/*
-var sampleText=  "<div class='res'>"+"Words :"+myArr.sample.sampleCount +"<br>"+
-                 "Nouns : "+myArr.sample.nouns + "<br>"+
-                 "Adjective : "+myArr.sample.adj + "<br>"+
-                 "Verb : "+myArr.sample.verb + "<br>"+
-                 "Adverbs : "+myArr.sample.verb + "<br>"+
-                 "missSpell: "+myArr.sample.missSpell+"</div>";
-
-var sampleText1= "<div class='res'>"+"Words :"+myArr.standard.standardCount + "<br>"+
-                 "Nouns : "+myArr.standard.nouns1 + "<br>"+
-                 "Adjective : "+myArr.standard.adj1 + "<br>"+
-                 "Verb : "+myArr.standard.verb1 + "<br>"+
-                 "Adverbs : "+myArr.standard.verb1   + "<br>"+
-                 "missSpell: "+myArr.standard.missSpell1+"</div>";
-                 
-var sampleText2="<div class='res'>"+"Percent WordCount :"+myArr.results.perWordCount + "<br>"+
-                 "Percent Nouns : "+myArr.results.perNoun + "<br>"+
-                 "Percent Adjective : "+myArr.results.perAdj + "<br>"+
-                 "Percent Verb : "+myArr.results.perVerb + "<br>"+
-                  "Percent Adverbs : "+myArr.results.perAdv  + "<br>"+
-                  "Percent missSpell: "+myArr.results.percentMissSpell+"</div>";
-//*/
-//document.getElementById("msg").innerHTML=s;
 document.getElementById("msg").insertAdjacentHTML('afterbegin',s);
 
 
@@ -62,10 +67,7 @@ document.getElementById("msg").insertAdjacentHTML('afterbegin',s);
 };
 
 }
-function addToFavourites(articleElement){
-	console.log(articleElement);
-	
-}
+
 
 
 
