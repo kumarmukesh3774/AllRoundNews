@@ -37,19 +37,23 @@ public class Handler extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 	
-	JSONObject json= new JSONObject();
+	
 
 static {
 	JSONParser parser = new JSONParser();
 	try {
-		Object obj = parser.parse(new FileReader("test.json"));
+		Object obj = parser.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
 		if(obj!=null) {
 		  jsonFinal = (JSONObject) obj;
-		  news = (JSONArray) jsonFinal.get("matches");
+		  news = (JSONArray) jsonFinal.get("news");
 	         Iterator<JSONObject> iterator = news.iterator();
 	         while(iterator.hasNext()) {
-	        	 System.out.println(iterator.next().get("title")+"\n");
-	         }
+					JSONObject ob=(JSONObject) iterator.next();
+					System.out.println(ob.get("title").toString());
+					
+					
+				}
+
 		}
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
@@ -74,16 +78,28 @@ static {
 		String url=request.getParameter("url");
 		String urlToImage=request.getParameter("urlToImage");
 		String description=request.getParameter("description");
-		System.out.println(title+url+urlToImage+description);
+		JSONObject json= new JSONObject();
+		//System.out.println(title+url+urlToImage+description);
 		json.put("title", title);
 		json.put("url", url);
 		json.put("urlToImage", urlToImage);
 		json.put("description", description);
-		if(news.size()<=10) {
+		if(news.size()<=9) {
 			Iterator newsIterator=news.iterator();
+			boolean flag=false;
+			while(newsIterator.hasNext()) {
+				JSONObject ob=(JSONObject) newsIterator.next();
+				if(ob.get("title").toString().equalsIgnoreCase((String) json.get("title"))) {
+					flag=true;
+					break;
+				}
+			}
+			if(flag==false) {
+				news.add(json);
+				jsonFinal.put("news", news);
+				
+			}
 
-		news.add(json);
-		jsonFinal.put("news", news);
 		
 		try{
 			FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
@@ -94,7 +110,16 @@ static {
 			System.out.println(e);
 			
 		}
+		finally {
+			response.setContentType("application/json");
+			response.getWriter().write(jsonFinal.toString());;
 		}
+		}
+		else {
+			
+			System.out.println("Maximum Count Reached ");
+		}
+		
 		
 		
 
