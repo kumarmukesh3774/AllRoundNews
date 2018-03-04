@@ -42,8 +42,9 @@ public class Handler extends HttpServlet {
 static {
 	JSONParser parser = new JSONParser();
 	try {
-		Object obj = parser.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
-		if(obj!=null) {
+		Object obj = parser.parse(new FileReader("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json"));
+		//Object obj = parser.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
+		if(obj!=null ) {
 		  jsonFinal = (JSONObject) obj;
 		  news = (JSONArray) jsonFinal.get("news");
 	         Iterator<JSONObject> iterator = news.iterator();
@@ -71,25 +72,35 @@ static {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
+		String res="Maximum Count Reached";
 		response.setContentType("text/html");
 		PrintWriter out= response.getWriter();
 		String title=request.getParameter("title");
 		String url=request.getParameter("url");
 		String urlToImage=request.getParameter("urlToImage");
 		String description=request.getParameter("description");
+		String flag1=request.getParameter("flag");
+		
 		JSONObject json= new JSONObject();
-		//System.out.println(title+url+urlToImage+description);
+		System.out.println(flag1);
 		json.put("title", title);
 		json.put("url", url);
 		json.put("urlToImage", urlToImage);
 		json.put("description", description);
-		if(news.size()<=9) {
+		if(news.size()<=9 || !Boolean.valueOf(flag1)) {
 			Iterator newsIterator=news.iterator();
 			boolean flag=false;
 			while(newsIterator.hasNext()) {
 				JSONObject ob=(JSONObject) newsIterator.next();
 				if(ob.get("title").toString().equalsIgnoreCase((String) json.get("title"))) {
+					if(Boolean.valueOf(flag1)) {
+					
+					res="Already exists in Favourites";
+					}
+					else if(!Boolean.valueOf(flag1)) {
+						news.remove(ob);
+						res="Removed From Favourites";
+					}
 					flag=true;
 					break;
 				}
@@ -97,12 +108,14 @@ static {
 			if(flag==false) {
 				news.add(json);
 				jsonFinal.put("news", news);
+				res="Added to Favourites";
 				
 			}
 
 		
 		try{
-			FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
+			FileWriter file = new FileWriter("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json");
+			//FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
 		file.write(jsonFinal.toJSONString());
 		file.flush();
 		}
@@ -112,12 +125,14 @@ static {
 		}
 		finally {
 			response.setContentType("application/json");
-			response.getWriter().write(jsonFinal.toString());;
+			response.getWriter().write(res);
 		}
 		}
 		else {
 			
 			System.out.println("Maximum Count Reached ");
+			response.setContentType("application/json");
+			response.getWriter().write(res);
 		}
 		
 		

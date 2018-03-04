@@ -17,4 +17,12 @@
     <servlet-name>Handler</servlet-name>
     <url-pattern>/Handler</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>FavsResponse</servlet-name>
+    <servlet-class>FavsResponse</servlet-class>
+  </servlet>
+    <servlet-mapping>
+    <servlet-name>FavsResponse</servlet-name>
+    <url-pattern>/FavsResponse</url-pattern>
+  </servlet-mapping>
 </web-app>

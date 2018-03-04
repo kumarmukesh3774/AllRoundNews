@@ -3,22 +3,21 @@ h1{
 text-align:center;
 margin-top: 45px;
 border: 1px solid blue;
-opacity: 0.6;
-background-color: #9f2 ;
+opacity: 0.8;
+background-color: #3465a4 ;
 font-family: 'Domine', serif;
-color:#826;
+color:#ef2929;
 border-radius: 20px;
 
 }
-#btn {
-text-align:center;
-margin-top: 50px;
-border: 1px solid blue;
+.add{
+
+
 opacity: 0.6;
-background-color: #9f2 ;
+
 font-family: 'Domine', serif;
-color:#826;
-border-radius: 20px;
+color:#000000;
+
 
 }
 
