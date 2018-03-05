@@ -1,5 +1,4 @@
 
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,134 +16,127 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
-
-
 /**
  * Servlet implementation class Handler
  */
 @WebServlet("/Handler")
 public class Handler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static JSONObject jsonFinal= new JSONObject();
-	static JSONArray news= new JSONArray();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Handler() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-	
-	
+	static JSONObject jsonFinal = new JSONObject();
+	static JSONArray news = new JSONArray();
 
-static {
-	JSONParser parser = new JSONParser();
-	try {
-		Object obj = parser.parse(new FileReader("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json"));
-		//Object obj = parser.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
-		if(obj!=null ) {
-		  jsonFinal = (JSONObject) obj;
-		  news = (JSONArray) jsonFinal.get("news");
-	         Iterator<JSONObject> iterator = news.iterator();
-	         while(iterator.hasNext()) {
-					JSONObject ob=(JSONObject) iterator.next();
-					System.out.println(ob.get("title").toString());
-					
-					
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public Handler() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	static {
+		JSONParser parser = new JSONParser();
+		try {
+			// Object obj = parser.parse(new
+			// FileReader("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json"));
+			Object obj = parser
+					.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
+			if (obj != null) {
+				jsonFinal = (JSONObject) obj;
+				news = (JSONArray) jsonFinal.get("news");
+				Iterator<JSONObject> iterator = news.iterator();
+				while (iterator.hasNext()) {
+					JSONObject ob = (JSONObject) iterator.next();
+					// System.out.println(ob.get("title").toString());
+
 				}
 
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
 	}
-}
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String res="Maximum Count Reached";
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String res = "Maximum Count Reached";
 		response.setContentType("text/html");
-		PrintWriter out= response.getWriter();
-		String title=request.getParameter("title");
-		String url=request.getParameter("url");
-		String urlToImage=request.getParameter("urlToImage");
-		String description=request.getParameter("description");
-		String flag1=request.getParameter("flag");
-		
-		JSONObject json= new JSONObject();
+		PrintWriter out = response.getWriter();
+		String title = request.getParameter("title");
+		String url = request.getParameter("url");
+		String urlToImage = request.getParameter("urlToImage");
+		String description = request.getParameter("description");
+		String flag1 = request.getParameter("flag");
+
+		JSONObject json = new JSONObject();
 		System.out.println(flag1);
 		json.put("title", title);
 		json.put("url", url);
 		json.put("urlToImage", urlToImage);
 		json.put("description", description);
-		if(news.size()<=9 || !Boolean.valueOf(flag1)) {
-			Iterator newsIterator=news.iterator();
-			boolean flag=false;
-			while(newsIterator.hasNext()) {
-				JSONObject ob=(JSONObject) newsIterator.next();
-				if(ob.get("title").toString().equalsIgnoreCase((String) json.get("title"))) {
-					if(Boolean.valueOf(flag1)) {
-					
-					res="Already exists in Favourites";
-					}
-					else if(!Boolean.valueOf(flag1)) {
+		if (news.size() <= 9 || !Boolean.valueOf(flag1)) {
+			Iterator newsIterator = news.iterator();
+			boolean flag = false;
+			while (newsIterator.hasNext()) {
+				JSONObject ob = (JSONObject) newsIterator.next();
+				if (ob.get("title").toString().equalsIgnoreCase((String) json.get("title"))) {
+					if (Boolean.valueOf(flag1)) {
+
+						res = "Already exists in Favourites";
+					} else if (!Boolean.valueOf(flag1)) {
 						news.remove(ob);
-						res="Removed From Favourites";
+						res = "Removed From Favourites";
 					}
-					flag=true;
+					flag = true;
 					break;
 				}
 			}
-			if(flag==false) {
+			if (flag == false) {
 				news.add(json);
 				jsonFinal.put("news", news);
-				res="Added to Favourites";
-				
+				res = "Added to Favourites";
+
 			}
 
-		
-		try{
-			FileWriter file = new FileWriter("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json");
-			//FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
-		file.write(jsonFinal.toJSONString());
-		file.flush();
-		}
-		catch(IOException e) {
-			System.out.println(e);
-			
-		}
-		finally {
-			response.setContentType("application/json");
-			response.getWriter().write(res);
-		}
-		}
-		else {
-			
+			try {
+				// FileWriter file = new
+				// FileWriter("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json");
+				FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
+				file.write(jsonFinal.toJSONString());
+				file.flush();
+			} catch (IOException e) {
+				System.out.println(e);
+
+			} finally {
+				response.setContentType("application/json");
+				response.getWriter().write(res);
+			}
+		} else {
+
 			System.out.println("Maximum Count Reached ");
 			response.setContentType("application/json");
 			response.getWriter().write(res);
 		}
-		
-		
-		
-
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
