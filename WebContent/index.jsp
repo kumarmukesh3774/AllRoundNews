@@ -49,6 +49,7 @@
 				<li class="nav-item" onclick="aboutUs()"><a
 					class="nav-link text-white" href="#"><i><span
 							style="font-style: normal;">About us</span></i></a></li>
+							
 			</ul>
 			<form class="form-inline m-0">
 				<input class="form-control mr-2" id="searchInput" type="text"

@@ -7,10 +7,11 @@ function searchHandler() {
 	var searchInput = document.getElementById("searchInput").value;
 	// alert(searchInput);
 
-	var xmlhttp = new XMLHttpRequest();
-	var url = "https://newsapi.org/v2/everything?q=" + searchInput
-			+ "&apiKey=0829585b678c492ea688ce9899e48313";
+	
+	var url = "https://newsapi.org/v2/everything?q=" + searchInput+ "&apiKey=0829585b678c492ea688ce9899e48313";
 	// opening connection to url
+
+	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 	xmlhttp.onreadystatechange = function() {
@@ -42,19 +43,20 @@ function searchHandler() {
 						+
 
 						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\"" + "title=\""
+						+ "flag=\"" + flag + "\" " + "title=\""
 						+ json.articles[i].title + "\" " + "url=\""
 						+ json.articles[i].url + "\" " + "urlToImage=\""
 						+ json.articles[i].urlToImage + "\"" + "description=\""
 						+ json.articles[i].description + "\"></div>";
 			}
 
-			// document.getElementById("searchResult").insertAdjacentHTML('afterbegin',s);
+			// document.getElementById("tech").insertAdjacentHTML('afterbegin',s);
 			document.getElementById("msg").innerHTML = s;
 
 		}
 
 	};
+
 
 }
 
