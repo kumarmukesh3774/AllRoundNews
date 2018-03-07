@@ -2,229 +2,101 @@
  * 
  */
 
+function ApiCallHandler(url, flag) {
+
+	var xmlhttp = new XMLHttpRequest();
+	// opening connection to url
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var json = JSON.parse(this.responseText);
+			var s = "";
+			for (i = 0; i < json.articles.length; i++) {
+				s = s
+						+ "<div class='col-lg-4 col-sm-6'>"
+						+
+
+						"<div><b>"
+						+ json.articles[i].title
+						+ "</b></div>"
+						+ "<div class='row'>"
+						+ "<div class='col-sm-6'>"
+						+ "<a href="
+						+ json.articles[i].url
+						+ ">"
+						+ "<img src="
+						+ json.articles[i].urlToImage
+						+ " alt='No Image'></div>"
+						+ "<div class='col-sm-6'>"
+						+ json.articles[i].description
+						+ "</div>"
+						+ "</a>"
+						+ "</div>"
+						+
+
+						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
+						+ "flag=\"" + flag + "\" " + "title=\""
+						+ json.articles[i].title + "\" " + "url=\""
+						+ json.articles[i].url + "\" " + "urlToImage=\""
+						+ json.articles[i].urlToImage + "\"" + "description=\""
+						+ json.articles[i].description + "\"></div>";
+			}
+
+			// document.getElementById("tech").insertAdjacentHTML('afterbegin',s);
+			document.getElementById("msg").innerHTML = s;
+
+		}
+
+	};
+
+}
+
 function searchHandler() {
-	// alert("bdhcbjkdsm");
+
 	var searchInput = document.getElementById("searchInput").value;
-	// alert(searchInput);
-
-	
-	var url = "https://newsapi.org/v2/everything?q=" + searchInput+ "&apiKey=0829585b678c492ea688ce9899e48313";
-	// opening connection to url
-
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var json = JSON.parse(this.responseText);
-			var s = "";
-			flag = true;
-			for (i = 0; i < json.articles.length; i++) {
-				s = s
-						+ "<div class='col-lg-4 col-sm-6'>"
-						+
-
-						"<div><b>"
-						+ json.articles[i].title
-						+ "</b></div>"
-						+ "<div class='row'>"
-						+ "<div class='col-sm-6'>"
-						+ "<a href="
-						+ json.articles[i].url
-						+ ">"
-						+ "<img src="
-						+ json.articles[i].urlToImage
-						+ " alt='No Image'></div>"
-						+ "<div class='col-sm-6'>"
-						+ json.articles[i].description
-						+ "</div>"
-						+ "</a>"
-						+ "</div>"
-						+
-
-						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\" " + "title=\""
-						+ json.articles[i].title + "\" " + "url=\""
-						+ json.articles[i].url + "\" " + "urlToImage=\""
-						+ json.articles[i].urlToImage + "\"" + "description=\""
-						+ json.articles[i].description + "\"></div>";
-			}
-
-			// document.getElementById("tech").insertAdjacentHTML('afterbegin',s);
-			document.getElementById("msg").innerHTML = s;
-
-		}
-
-	};
-
+	var url = "https://newsapi.org/v2/everything?q=" + searchInput
+			+ "&apiKey=0829585b678c492ea688ce9899e48313";
+	flag = true;
+	ApiCallHandler(url, flag);
 
 }
 
+//setting business page
 function business() {
-	var xmlhttp = new XMLHttpRequest();
+
 	var url = "https://newsapi.org/v2/everything?sources=business-insider&apiKey=0829585b678c492ea688ce9899e48313";
-	// opening connection to url
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var json = JSON.parse(this.responseText);
-			var s = "";
-			flag = true;
-			for (i = 0; i < json.articles.length; i++) {
-				s = s
-						+ "<div class='col-lg-4 col-sm-6'>"
-						+
-
-						"<div><b>"
-						+ json.articles[i].title
-						+ "</b></div>"
-						+ "<div class='row'>"
-						+ "<div class='col-sm-6'>"
-						+ "<a href="
-						+ json.articles[i].url
-						+ ">"
-						+ "<img src="
-						+ json.articles[i].urlToImage
-						+ " alt='No Image'></div>"
-						+ "<div class='col-sm-6'>"
-						+ json.articles[i].description
-						+ "</div>"
-						+ "</a>"
-						+ "</div>"
-						+
-
-						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\" " + "title=\""
-						+ json.articles[i].title + "\" " + "url=\""
-						+ json.articles[i].url + "\" " + "urlToImage=\""
-						+ json.articles[i].urlToImage + "\"" + "description=\""
-						+ json.articles[i].description + "\"></div>";
-			}
-
-			// document.getElementById("tech").insertAdjacentHTML('afterbegin',s);
-			document.getElementById("msg").innerHTML = s;
-
-		}
-
-	};
-
+	flag = true;
+	ApiCallHandler(url, flag);
 }
-
+//setting tech page
 function tech() {
-	var xmlhttp = new XMLHttpRequest();
+
 	var url = "https://newsapi.org/v2/top-headlines?sources=ars-technica&apiKey=0829585b678c492ea688ce9899e48313";
-	// opening connection to url
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var json = JSON.parse(this.responseText);
-			var s = "";
-			flag = true;
-			for (i = 0; i < json.articles.length; i++) {
-				s = s
-						+ "<div class='col-lg-4 col-sm-6'>"
-						+
-
-						"<div><b>"
-						+ json.articles[i].title
-						+ "</b></div>"
-						+ "<div class='row'>"
-						+ "<div class='col-sm-6'>"
-						+ "<a href="
-						+ json.articles[i].url
-						+ ">"
-						+ "<img src="
-						+ json.articles[i].urlToImage
-						+ " alt='No Image'></div>"
-						+ "<div class='col-sm-6'>"
-						+ json.articles[i].description
-						+ "</div>"
-						+ "</a>"
-						+ "</div>"
-						+
-
-						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\"" + "title=\""
-						+ json.articles[i].title + "\" " + "url=\""
-						+ json.articles[i].url + "\" " + "urlToImage=\""
-						+ json.articles[i].urlToImage + "\"" + "description=\""
-						+ json.articles[i].description + "\"></div>";
-			}
-
-			// document.getElementById("tech").insertAdjacentHTML('afterbegin',s);
-			document.getElementById("msg").innerHTML = s;
-
-		}
-
-	};
+	flag = true;
+	ApiCallHandler(url, flag);
 
 }
-
+//setting sports page
 function sports() {
-	var xmlhttp = new XMLHttpRequest();
+
 	var url = "https://newsapi.org/v2/top-headlines?sources=bbc-sport&apiKey=0829585b678c492ea688ce9899e48313";
-	// opening connection to url
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var json = JSON.parse(this.responseText);
-			var s = "";
-			flag = true;
-			for (i = 0; i < json.articles.length; i++) {
-				s = s
-						+ "<div class='col-lg-4 col-sm-6'>"
-						+
 
-						"<div><b>"
-						+ json.articles[i].title
-						+ "</b></div>"
-						+ "<div class='row'>"
-						+ "<div class='col-sm-6'>"
-						+ "<a href="
-						+ json.articles[i].url
-						+ ">"
-						+ "<img src="
-						+ json.articles[i].urlToImage
-						+ " alt='No Image'></div>"
-						+ "<div class='col-sm-6'>"
-						+ json.articles[i].description
-						+ "</div>"
-						+ "</a>"
-						+ "</div>"
-						+
-
-						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\"" + "title=\""
-						+ json.articles[i].title + "\" " + "url=\""
-						+ json.articles[i].url + "\" " + "urlToImage=\""
-						+ json.articles[i].urlToImage + "\"" + "description=\""
-						+ json.articles[i].description + "\"></div>";
-				;
-			}
-
-			// document.getElementById("sports").insertAdjacentHTML('afterbegin',s);
-			document.getElementById("msg").innerHTML = s;
-
-		}
-
-	};
+	flag = true;
+	ApiCallHandler(url, flag);
 
 }
 
+
+//for handling favourites and its removal
 function favourites() {
 
-	// x.style.display = "block";
 	// document.getElementById("favs").style.display="block";
 	// document.getElementById("favs").insertAdjacentHTML("afterbegin",res);
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		var res = "Nothing added to Favourite List";
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// document.getElementById("myDiv").innerHTML =
-			// xmlhttp.responseText;
 			if (xmlhttp.responseText === "Nothing in the List") {
 				var resp = "<div class='col-sm-12'>"
 						+ "<h1>Nothing in the List</h1>" + "</b></div>";
@@ -236,6 +108,7 @@ function favourites() {
 				// alert(finalObj);
 				var flag = false;
 				var res = "";
+				
 				for (i = 0; i < finalObj.news.length; i++) {
 					res = res
 							+ "<div class='col-lg-4 col-sm-6'>"
@@ -283,7 +156,7 @@ function favourites() {
 	xmlhttp.send();
 
 }
-
+//setting business page
 function addToFavourites(input) {
 	var title = input.getAttribute('title');
 	var url = input.getAttribute('url');
@@ -298,25 +171,12 @@ function addToFavourites(input) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// document.getElementById("myDiv").innerHTML =
-			// xmlhttp.responseText;
-			// var finalObj=JSON.parse(this.responseText);
+
 			finalObj = xmlhttp.responseText;
 			alert(finalObj);
 			if (finalObj === "Removed From Favourites") {
 				favourites();
 			}
-			/*
-			 * var res=""; for(i=0;i<finalObj.news.length;i++){ res=res+"<div
-			 * class='col-lg-4 col-sm-6'>" +
-			 *  "<div><b>"+finalObj.news[i].title+"</b></div>"+ "<div
-			 * class='row'>"+ "<div class='col-sm-6'>"+ "<a
-			 * href="+finalObj.news[i].url+">"+ "<img
-			 * src="+finalObj.news[i].urlToImage+" alt='No Image'></div>"+ "<div
-			 * class='col-sm-6'>"+finalObj.news[i].description+"</div>"+ "</a>" + "</div>" + "</div>"; }
-			 * document.getElementById("favs").insertAdjacentHTML("afterbegin",res);
-			 * //document.getElementById("favs").style.display="none";
-			 */
 
 		}
 	};
@@ -332,54 +192,10 @@ function addToFavourites(input) {
 
 }
 
-function receiver() {
-	var xmlhttp = new XMLHttpRequest();
+function worldNewsHome() {
+
 	var url = "https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=0829585b678c492ea688ce9899e48313";
-	// opening connection to url
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var json = JSON.parse(this.responseText);
-			var s = "";
-			var flag = true;
-			for (i = 0; i < json.articles.length; i++) {
-
-				s = s
-						+ "<div class='col-lg-4 col-sm-6'>"
-						+
-
-						"<div><b>"
-						+ json.articles[i].title
-						+ "</b></div>"
-						+ "<div class='row'>"
-						+ "<div class='col-sm-6'>"
-						+ "<a href="
-						+ json.articles[i].url
-						+ ">"
-						+ "<img src="
-						+ json.articles[i].urlToImage
-						+ " alt='No Image'></div>"
-						+ "<div class='col-sm-6'>"
-						+ json.articles[i].description
-						+ "</div>"
-						+ "</a>"
-						+ "</div>"
-						+
-
-						"<input class='add' type='submit' value='Add to Favourites' onclick=\"addToFavourites(this)\" "
-						+ "flag=\"" + flag + "\"" + "title=\""
-						+ json.articles[i].title + "\" " + "url=\""
-						+ json.articles[i].url + "\" " + "urlToImage=\""
-						+ json.articles[i].urlToImage + "\"" + "description=\""
-						+ json.articles[i].description + "\"></div>";
-			}
-
-			//document.getElementById("msg").insertAdjacentHTML('afterbegin',s);
-			document.getElementById("msg").innerHTML = s;
-
-		}
-
-	};
+	flag = true;
+	ApiCallHandler(url, flag);
 
 }

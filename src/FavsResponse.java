@@ -24,13 +24,13 @@ public class FavsResponse extends HttpServlet {
 	 */
 	public FavsResponse() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	//for sending the json data saved in favourites to mainScript.js
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		JSONParser parser = new JSONParser();
@@ -38,23 +38,20 @@ public class FavsResponse extends HttpServlet {
 		JSONArray news = null;
 		boolean flag = false;
 		try {
-
-			// Object obj = parser.parse(new
-			// FileReader("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json"));
+			//fetching json data from news.json
 			Object obj = parser
 					.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
-			// if(obj!=null ) {
 			jsonFinal = (JSONObject) obj;
+			//initialising  news JSONArray
 			news = (JSONArray) jsonFinal.get("news");
 			flag = true;
-			// }
 
 		} catch (IOException e) {
 			System.out.println(e);
 
 		} catch (ParseException e) {
 
-			// e.printStackTrace();
+			 e.printStackTrace();
 		} finally {
 			if (flag) {
 				if (news.size() == 0) {
@@ -79,7 +76,6 @@ public class FavsResponse extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

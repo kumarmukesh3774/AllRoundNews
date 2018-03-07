@@ -22,6 +22,7 @@ import org.json.simple.parser.ParseException;
 @WebServlet("/Handler")
 public class Handler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//static variables maintain their values between function calls and exist throughout the program life
 	static JSONObject jsonFinal = new JSONObject();
 	static JSONArray news = new JSONArray();
 
@@ -32,12 +33,11 @@ public class Handler extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+//to initiallise the JSONArraylist when servlet is called fist time after the start of program
 	static {
 		JSONParser parser = new JSONParser();
 		try {
-			// Object obj = parser.parse(new
-			// FileReader("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json"));
+
 			Object obj = parser
 					.parse(new FileReader("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json"));
 			if (obj != null) {
@@ -46,19 +46,19 @@ public class Handler extends HttpServlet {
 				Iterator<JSONObject> iterator = news.iterator();
 				while (iterator.hasNext()) {
 					JSONObject ob = (JSONObject) iterator.next();
-					// System.out.println(ob.get("title").toString());
+
 
 				}
 
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		}
 	}
@@ -90,6 +90,7 @@ public class Handler extends HttpServlet {
 			boolean flag = false;
 			while (newsIterator.hasNext()) {
 				JSONObject ob = (JSONObject) newsIterator.next();
+				//if title of the entry object exists and is equal to the stored favourite list object title
 				if (ob.get("title").toString().equalsIgnoreCase((String) json.get("title"))) {
 					if (Boolean.valueOf(flag1)) {
 
@@ -110,8 +111,7 @@ public class Handler extends HttpServlet {
 			}
 
 			try {
-				// FileWriter file = new
-				// FileWriter("/home/mukesh/Dev/STSWorks/AllRoundNews/json/news.json");
+
 				FileWriter file = new FileWriter("/home/sapient/Desktop/Mukesh/SDev/STS/AllRoundNews/json/news.json");
 				file.write(jsonFinal.toJSONString());
 				file.flush();
@@ -137,7 +137,6 @@ public class Handler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

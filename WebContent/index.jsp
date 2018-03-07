@@ -17,10 +17,12 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="text-secondary" onload="receiver()">
+
+<!-- loading homepage -->
+<body class="text-secondary" onload="worldNewsHome()">
 	<nav class="navbar navbar-expand-md bg-secondary navbar-dark ">
 	<div class="container-fluid">
-		<div onclick="receiver()">
+		<div onclick="worldNewsHome()">
 			<a class="navbar-brand justify-content-start" href="#">WORLD NEWS</a>
 		</div>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -49,12 +51,12 @@
 				<li class="nav-item" onclick="aboutUs()"><a
 					class="nav-link text-white" href="#"><i><span
 							style="font-style: normal;">About us</span></i></a></li>
-							
+
 			</ul>
-			<form class="form-inline m-0">
+			<form class="form-inline ">
 				<input class="form-control mr-2" id="searchInput" type="text"
 					placeholder="Search">
-				<button class="btn btn-primary" onclick="searchHandler()">Search</button>
+				<button class="btn btn-primary" type="button" onclick="searchHandler()">Search</button>
 			</form>
 
 		</div>
@@ -68,6 +70,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
+<!-- 				dynamic box for loading different api -->
 					<div class="row" id="msg"></div>
 				</div>
 			</div>
